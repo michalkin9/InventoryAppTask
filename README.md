@@ -12,30 +12,42 @@ Project is created with:
 ## Docker Image
 ["inventory_task" repository](https://hub.docker.com/repository/docker/michaly/inventory_task)
 
+*Pull docker request :* 
+
+```
+pull michaly/inventory_task:latest
+```
+*run docker image :*
+```
+docker run -p 8080:8080 michaly/inventory_task:latest
+```
+
+
 ## API's
 [Link to swagger](http://localhost:8080/swagger-ui.html) - **You can perform the actions below from the link when the application is running**
 
 - Get a list of all inventories in the DB and their details by a `GET Request.` 
 
 ```
-GET: /inventories/{number}
+GET: api/inventories/{number}
 ```
-- Get a specific item details  by a  `GET Request` with a spesific number of the inventory.
+Get a specific item details  by a  `GET Request` with a specific number of the inventory.
 ```
-GET: /inventories/{number}
+GET: api/inventories/{number}
 ```
-* Withdrawal/Deposit  quantity of an item by `PUT Request` with a spesific number of the inventory you wish to change 
-
-
-with a body of the relevant changes of the item.
+* Withdrawal/Deposit quantity of an item by `PUT Request` with a specific number of the inventory and specific amount.
 ```
-PUT: /inventories/{number}
+PUT: api/inventories/{number}/{amount}
 ```
-* Add item to stock  by a  `POST Request`
+* Change Inventory details by a `PUT request` with a spesific number of the inventory. (you can see request body in swagger)
 ```
-POST: /inventories/add
+PUT: api/inventories/{number}
 ```
-* Delete an item from stock by `DELETE Request`  with a spesific number of the inventory you wish to delete from DB.
+* Add item to stock  by a  `POST Request`. (you can see request body in swagger)
 ```
-DELETE: /inventories/{number}
+POST: api/inventories/add
+```
+* Delete an item from stock by a `DELETE Request`  with a spesific number of the inventory you wish to delete from DB.
+```
+DELETE: api/inventories/{number}
 ```
