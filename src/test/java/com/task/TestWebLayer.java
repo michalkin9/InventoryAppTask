@@ -43,16 +43,17 @@ public class TestWebLayer {
     }
 
 
-    @Test
-    void addInventoryTest() throws Exception {
-
-        String json = "{\"amount\":10,\"code\":01,\"name\":\"book\",\"number\":1}";
-
-        RequestBuilder r = MockMvcRequestBuilders.post("/api/inventories/add").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json); //creating a request
-        MvcResult result = mvc.perform(r).andReturn();
-
-        MockHttpServletResponse response = result.getResponse();
-        assertEquals(200, response.getStatus());
-
-    }
+//    @Test
+//    void addInventoryTest() throws Exception {
+//
+//        String json = "{\"amount\":10,\"code\":01,\"name\":\"book\",\"number\":1}";
+//
+//        RequestBuilder r = MockMvcRequestBuilders.post("/api/inventories/add").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(json); //creating a request
+//        MvcResult result = mvc.perform(r).andReturn();
+//
+//        MockHttpServletResponse response = result.getResponse();
+//        assertEquals(200, response.getStatus());
+//
+//    }
+    
 }
