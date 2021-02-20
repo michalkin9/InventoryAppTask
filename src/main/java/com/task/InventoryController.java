@@ -2,6 +2,8 @@ package com.task;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
@@ -14,6 +16,7 @@ public class InventoryController {
 
     @Autowired
     private InventoryS ser;
+
 
     /**
      * by getting this "GET" http request - give all the inventories info.
@@ -39,29 +42,34 @@ public class InventoryController {
         Inventory curr =  ser.getByNum(number);
         if(curr == null){
             System.out.println("not exsiting");
-            return null; //TODO: To check null options!
+            return null;
         }
         else return curr;
     }
 
 
-    @PostMapping("/inventories/add")
+    @PostMapping(value = "/inventories/add")
     @ApiOperation(value = "Add an Inventory ",notes ="provide an inventory details to add an inventory to DB")
-    public String addInventory(@RequestBody Inventory in){
-       return this.ser.addIn(in);
-    }
+    public ResponseEntity addInventory(@RequestBody Inventory in){
+        return this.ser.addIn(in);
 
+    }
 
     @PutMapping("/inventories/{number}")
     @ApiOperation(value = "Update an inventory details",notes ="provide a number of a specific inventory you want to update")
-    public void upDateInventory(@RequestBody Inventory in , @PathVariable int number){
+    public void updateInventory(@RequestBody Inventory in , @PathVariable int number){
       this.ser.update(in,number);
     }
 
+    @PutMapping("/inventories/{number}/{amount}")
+    @ApiOperation(value = "Update an inventory amount",notes ="provide a number of a specific inventory you want to update, and the new amount")
+    public void updateInventoryAmount(@PathVariable int number,@PathVariable int amount){
+        this.ser.updateInventoryAmount(number,amount);
+    }
 
     @DeleteMapping("/inventories/{number}")
     @ApiOperation(value = "Delete an Inventory ",notes ="provide a number in order to delete the specific inventory")
-    public String deleteInventory(@PathVariable int number){
+    public @ResponseBody String deleteInventory(@PathVariable int number){
       if(this.ser.remove(number) == 1)
           return "Deletion completed successfully";
       return "The deletion cannot be performed because no such number exists";

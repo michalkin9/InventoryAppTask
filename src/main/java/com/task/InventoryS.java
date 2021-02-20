@@ -1,6 +1,8 @@
 package com.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +18,7 @@ public class InventoryS {
     private InventoryRep inventoryRep;
 
     public List<Inventory> getAll(){
-
-        //return inventoryRep.;
+        //return list of all inventories in the DB;
         List<Inventory> inventories = new ArrayList<>();
          inventoryRep.findAll().forEach(inventories::add);
          return inventories;
@@ -28,13 +29,19 @@ public class InventoryS {
       return inventoryRep.findById(num).orElse(null);
     }
 
-    public String addIn(Inventory in){
+    public ResponseEntity addIn(Inventory in){
         if(in.getNumber() == 0)
-            return "Can't be preformed. number should be greater then zero";
+            return new ResponseEntity(
+                    "Can't be preformed. number should be greater then zero",
+                    HttpStatus.BAD_REQUEST);
         else if(inventoryRep.existsById(in.getNumber()))
-            return "The id number already exsits";
+            return new ResponseEntity(
+                    "Ths ID is already exists",
+                    HttpStatus.BAD_REQUEST);
         inventoryRep.save(in); //saves object in the DB.
-        return "Successfully added to database";
+        return new ResponseEntity(
+                "Successfully added to database",
+                HttpStatus.OK);
     }
 
     public void update(Inventory in, int number) {
@@ -49,8 +56,21 @@ public class InventoryS {
 
     }
 
+    public void updateInventoryAmount(int number, int amount) {
+
+        Inventory v=  inventoryRep.findById(number).orElse(null);
+        if(v == null) return;
+        else{
+            if(amount<0)
+                return;
+            else v.setAmount(amount);
+        }
+        inventoryRep.save(v);
+    }
+
     public int remove(int number){
 
+        // if number exsits then delete
         if (inventoryRep.existsById(number)) {
             inventoryRep.deleteById(number);
             return 1;
@@ -59,4 +79,6 @@ public class InventoryS {
         return -1;
 
     }
+
+
 }

@@ -32,9 +32,9 @@ public class Inventory {
         return number;
     }
 
-//    public void setNumber(int number) {
-//        this.number = number;
-//    }
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public int getCode() {
         return code;
