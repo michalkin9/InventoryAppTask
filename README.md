@@ -1,5 +1,4 @@
 # InventoryAppTask
- # InventoryAppTask
 
 simple application created with **Spring-boot**, Rest controller and swagger.
 
